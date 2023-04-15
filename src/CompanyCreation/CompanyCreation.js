@@ -14,7 +14,7 @@ const CompanyCreation = () => {
     .then((resp)=> {
         setCompany(resp.data.company);
        
-       console.log('DATA:',resp)
+       //console.log('DATA:',resp)
     })
   },[]);
 
