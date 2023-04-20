@@ -1,11 +1,12 @@
 import React from 'react';
 import axios, { Axios } from 'axios';
 import { useState,useEffect } from 'react';
-import logo from '../assets/logos/bike.png';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/logos/bike.png';
 
 
 
-const BikeCreation = () => {
+const BikeList = () => {
 
   const [bike,setBike] = useState([]);
 
@@ -17,12 +18,16 @@ const BikeCreation = () => {
     })
   },[]);
 
+  const navigate = useNavigate();
+  const Create = () => {
+    navigate('/BikeCreation')
+  }
 
   return (
     <div>
        <h2><img src={logo} className="" alt="logo" width="100px" />BikeCreation</h2> 
-       {/* <button onClick={getCompany} className='btn btn-primary'>GO</button>
-       {input} */}
+       <button onClick={Create} className='btn btn-primary'>Create</button>
+      
  
      <h3>BIKES</h3>
      <table class="table">
@@ -50,4 +55,4 @@ const BikeCreation = () => {
   )
 }
 
-export default BikeCreation
+export default BikeList

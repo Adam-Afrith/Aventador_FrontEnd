@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react';
 
 
 
-const OwnerCreation = () => {
+const OwnerList = () => {
 
   const [owner,setOwner] = useState([]);
 
@@ -51,4 +51,4 @@ const OwnerCreation = () => {
   )
 }
 
-export default OwnerCreation
+export default OwnerList

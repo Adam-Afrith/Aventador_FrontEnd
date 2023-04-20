@@ -1,7 +1,8 @@
 import React from 'react';
 import axios, { Axios } from 'axios';
 import { useState,useEffect } from 'react';
-import logo from '../assets/logos/letter-c.png';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/logos/letter-c.png';
 
 
 
@@ -12,22 +13,26 @@ const CompanyCreation = () => {
   useEffect(()=>{
     axios.get('http://localhost:8000/api/company')
     .then((resp)=> {
-        setCompany(resp.data.company);
-       
+        setCompany(resp.data.company);   
        //console.log('DATA:',resp)
-       console.log('DATA');
     })
   },[]);
+
+  const navigate = useNavigate();
+  const Create = () => {
+    navigate('/CompanyCreation')
+  }
+
 
 
   return (
     <div>
-       <h2><img src={logo} className="" alt="logo" width="100px" />CompanyCreation</h2> 
-       {/* <button onClick={getCompany} className='btn btn-primary'>GO</button>
-       {input} */}
- 
+      
+       <h2><img src={logo} className="" alt="logo" width="100px" />CompanyCreation</h2>  
+ <button className='btn btn-dark' onClick={Create}>Create</button>
+
      <h3>Companies</h3>
-     <table class="table">
+     <table className="table">
         <thead>
             <tr>
             <th scope="col">S.No</th>
