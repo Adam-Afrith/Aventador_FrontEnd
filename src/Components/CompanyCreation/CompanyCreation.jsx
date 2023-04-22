@@ -83,9 +83,13 @@ const CompanyCreation = () => {
 
 
   return (
-    <div>
-    <h2 align='center'>Company Creation</h2>
-
+    <>
+     <div className='card card-primary p-12 border-0 shadow-lg'>
+      <div className='card-body'>
+         <h2>Company Creation</h2>
+      </div>
+      </div>
+<br></br>
     <form>
     <div className="container">
         <div className="row d-flex justify-content-center">
@@ -93,7 +97,7 @@ const CompanyCreation = () => {
                 <div className='card card-primary p-4 border-0 shadow-lg'>
                     <div className='card-body'>
                         <h5>Company</h5>
-                        <div class='mb-3'>
+                        <div className='mb-3'>
                         <input 
                             type="text"
                             className="form-control"
@@ -112,7 +116,7 @@ const CompanyCreation = () => {
         </div>
 </div>
 </form>
-</div>
+</>
 
   )
 }

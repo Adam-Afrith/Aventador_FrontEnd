@@ -2,50 +2,53 @@ import React from 'react';
 import axios, { Axios } from 'axios';
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/logos/letter-c.png';
+import Swal from 'sweetalert2';
 
 
 
-const CompanyCreation = () => {
+const OwnerList = () => {
 
-  const [company,setCompany] = useState([]);
+  const [owner,setOwner] = useState([]);
 
   useEffect(()=>{
-    axios.get('http://localhost:8000/api/company')
+    axios.get('http://localhost:8000/api/owner')
     .then((resp)=> {
-        setCompany(resp.data.company);   
-       //console.log('DATA:',resp)
+      setOwner(resp.data.owner);
+      console.log('DATA:',resp)
     })
   },[]);
 
   const navigate = useNavigate();
   const Create = () => {
-    navigate('/CompanyCreation')
+    navigate('/OwnerCreation')
   }
 
 
 
   return (
     <div>
+       <button onClick={Create} className='btn btn-primary'>Create</button>
       
-       <h2><img src={logo} className="" alt="logo" width="100px" />CompanyCreation</h2>  
- <button className='btn btn-dark' onClick={Create}>Create</button>
 
-     <h3>Companies</h3>
-     <table className="table">
+     <h3>Owners</h3>
+     <table class="table">
         <thead>
             <tr>
             <th scope="col">S.No</th>
             <th scope="col">Company</th>
+            <th scope="col">Bike</th>
+            <th scope="col">Owner</th>
             <th scope="col">Action</th>
           
             </tr>
         </thead>
         <tbody>
-            {company.map((element,index)=>(
+            {owner.map((element,index)=>(
               <tr key={index}>
                 <td>{++index}</td>
                 <td>{element.company_name}</td>
+                <td>{element.bike_name}</td>
+                <td>{element.owner_name}</td>
                 <td>Action</td>
               </tr>  
             ))} 
@@ -54,4 +57,5 @@ const CompanyCreation = () => {
     </div>
   )
 }
-export default CompanyCreation
+
+export default OwnerList
