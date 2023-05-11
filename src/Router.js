@@ -10,6 +10,7 @@ import OwnerCreation from "./Components/OwnerCreation/OwnerCreation";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Menus from "./Components/Sidebar/Menus";
 import Design from "./Components/Design/Design";
+import Page404 from "./Components/Page404";
 
 function Routed() {
   return (
@@ -24,6 +25,7 @@ function Routed() {
       <Route path="Sidebar" element={<Sidebar />} />
       <Route path="Menus" element={<Menus />} />
       <Route path="Design" element={<Design />} />
+      <Route path="Page404" element={<Page404 />} />
     </Routes>
   );
 }
