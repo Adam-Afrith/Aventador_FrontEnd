@@ -1,6 +1,7 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 import logo from "../../assets/logos/trophy.png";
+import "../../App.css";
 
 export const data = [
   ["Task", "Hours per Day"],
@@ -22,6 +23,7 @@ const Dashboard = () => {
       <h2>Dashboard Page</h2>
       <img src={logo} className="" alt="logo" width="300px" />
       <button className="btn btn-primary">GO</button>
+
       <Chart
         chartType="PieChart"
         data={data}

@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 // @mui
 import { styled } from "@mui/material/styles";
 import { Button, Typography, Container, Box } from "@mui/material";
+import logo from "./../assets/logos/Rocket.gif";
 
 // ----------------------------------------------------------------------
 
@@ -22,14 +23,10 @@ const StyledContent = styled("div")(({ theme }) => ({
 export default function Page404() {
   return (
     <>
-      <Helmet>
-        <title> 404 Page Not Found | Minimal UI </title>
-      </Helmet>
-
       <Container>
         <StyledContent sx={{ textAlign: "center", alignItems: "center" }}>
           <Typography variant="h3" paragraph>
-            Sorry, page not found!
+            404 Page Not Found!
           </Typography>
 
           <Typography sx={{ color: "text.secondary" }}>
@@ -39,8 +36,8 @@ export default function Page404() {
 
           <Box
             component="img"
-            src="/assets/illustrations/illustration_404.svg"
-            sx={{ height: 260, mx: "auto", my: { xs: 5, sm: 10 } }}
+            src={logo}
+            sx={{ height: 100, mx: "auto", my: { xs: 5, sm: 10 } }}
           />
 
           <Button

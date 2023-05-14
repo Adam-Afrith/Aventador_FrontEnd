@@ -11,11 +11,14 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 import Menus from "./Components/Sidebar/Menus";
 import Design from "./Components/Design/Design";
 import Page404 from "./Components/Page404";
+import Login from "./Components/Login/Login";
+import Master from "./Master/Master";
 
 function Routed() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<Login />} />
+      <Route path="Dashboard" element={<Dashboard />} />
       <Route path="CompanyCreation" element={<CompanyCreation />} />
       <Route path="CompanyList" element={<CompanyList />} />
       <Route path="BikeCreation" element={<BikeCreation />} />
@@ -25,7 +28,8 @@ function Routed() {
       <Route path="Sidebar" element={<Sidebar />} />
       <Route path="Menus" element={<Menus />} />
       <Route path="Design" element={<Design />} />
-      <Route path="Page404" element={<Page404 />} />
+      <Route path="*" element={<Page404 />} />
+      <Route path="Master" element={<Master />} />
     </Routes>
   );
 }
