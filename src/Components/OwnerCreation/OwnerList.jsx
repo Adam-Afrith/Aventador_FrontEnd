@@ -50,12 +50,13 @@ const OwnerList = () => {
       </Fab>
       <h3>Owner List</h3>
       <div className="card card-primary p-4 border-0 shadow-lg">
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead className="table-primary">
             <tr>
               <th scope="col">S.No</th>
               <th scope="col">Company</th>
               <th scope="col">Bike</th>
+              <th scope="col">Price</th>
               <th scope="col">Owner</th>
               <th scope="col">Action</th>
             </tr>
@@ -66,6 +67,7 @@ const OwnerList = () => {
                 <td>{++index}</td>
                 <td>{element.company_name}</td>
                 <td>{element.bike_name}</td>
+                <td>{element.price}</td>
                 <td>{element.owner_name}</td>
                 <td>
                   <Fab color="secondary" size="small" aria-label="edit">

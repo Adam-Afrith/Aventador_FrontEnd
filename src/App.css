@@ -37,6 +37,8 @@
   }
 }
 
+@import "~@flaticon/flaticon-uicons/css/all/all";
+
 /***********************Sidebar**********************/
 /* NX = not expanded */
 
@@ -206,5 +208,11 @@
 
 /************dashboard*****************/
 
-
+.chart
+{
+	background-color: #061b28;
+}
+.calendar{
+	background-color: black;
+}
 /************End dashboard***************/
