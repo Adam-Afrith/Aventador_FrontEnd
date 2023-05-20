@@ -13,6 +13,7 @@ import Design from "./Components/Design/Design";
 import Page404 from "./Components/Page404";
 import Login from "./Components/Login/Login";
 import FileList from "./Components/Files/FileList";
+import FileCreation from "./Components/Files/FileCreation";
 import AttendanceLog from "./Components/AttendanceLog/AttendanceLog";
 import Master from "./Master/Master";
 
@@ -31,6 +32,7 @@ function Routed() {
       <Route path="Menus" element={<Menus />} />
       <Route path="Design" element={<Design />} />
       <Route path="FileList" element={<FileList />} />
+      <Route path="FileCreation" element={<FileCreation />} />
       <Route path="AttendanceLog" element={<AttendanceLog />} />
       <Route path="*" element={<Page404 />} />
       <Route path="Master" element={<Master />} />
