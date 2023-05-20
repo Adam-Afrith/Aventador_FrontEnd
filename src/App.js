@@ -5,6 +5,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Routed from "./Router";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Master from "./Master/Master";
+import Footer from "./Layouts/Footer";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div>
         <Routed />
       </div>
+      <div>{/* <Footer /> */}</div>
     </>
   );
 }

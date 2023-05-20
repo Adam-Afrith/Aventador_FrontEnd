@@ -23,15 +23,23 @@ const AttendanceLog = () => {
               ))}
             </tr>
             <tr>
-              <td>
+              Days Present
+              {rows.map((element, index) => (
+                <th>
+                  <input type="checkbox" name="" id="" />
+                </th>
+              ))}
+            </tr>
+            <tr>
+              <th>
                 Name
-                <i class="fi fi-rr-user"></i>
+                {/* <i class="fi fi-rr-user"></i>
                 <i class="fi fi-br-arrow-right"></i>
                 <i class="fi fi-sr-book"></i>
                 <i class="fi fi-rr-broom"></i>
-                <i class="fi fi-brands-facebook"></i>
+                <i class="fi fi-brands-facebook"></i> */}
                 <i class="fi fi-ss-star"></i>
-              </td>
+              </th>
             </tr>
           </tbody>
         </table>
