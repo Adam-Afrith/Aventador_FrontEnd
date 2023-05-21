@@ -49,7 +49,7 @@ const BikeList = () => {
       </Fab>
       <h3>Bike List</h3>
       <div className="card card-primary p-4 border-0 shadow-lg">
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead className="table-primary">
             <tr>
               <th scope="col">S.No</th>
@@ -73,7 +73,7 @@ const BikeList = () => {
                   </IconButton>
                   <IconButton aria-label="delete">
                     <DeleteIcon />
-                  </IconButton>{" "}
+                  </IconButton>
                 </td>
               </tr>
             ))}

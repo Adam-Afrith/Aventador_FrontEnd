@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import Swal from "sweetalert2";
@@ -8,16 +8,19 @@ import Swal from "sweetalert2";
 const initialState = {
   company: null,
   bike: null,
+  price: "",
   owner: "",
 };
 
 const initialStateErr = {
   companyErr: "",
   bikeErr: "",
+  priceErr: "",
   ownerErr: "",
 };
 
 const OwnerCreation = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const cancelHandler = () => {
     navigate("/OwnerList");
@@ -27,6 +30,7 @@ const OwnerCreation = () => {
   const [companyList, setCompanyList] = useState([]);
   const [bikeList, setBikeList] = useState([]);
   const [inputValidation, setInputValidation] = useState(initialStateErr);
+  const [savedData, setSavedData] = useState({});
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/companylist").then((resp) => {
@@ -35,13 +39,16 @@ const OwnerCreation = () => {
   }, []);
 
   useEffect(() => {
-    //if (id) {
-    axios.get("http://localhost:8000/api/bike/list/${id}").then((resp) => {
-      setBikeList(resp.data.bikelist);
-      console.log("first", resp);
-    });
-    //  }
-  }, []);
+    if (input.company?.value) {
+      console.log("ID", input.company?.value);
+      axios
+        .get(`http://localhost:8000/api/bike/list/${input.company?.value}`)
+        .then((resp) => {
+          setBikeList(resp.data.bikelist);
+          console.log("bikeLISt", resp);
+        });
+    }
+  }, [input.company]);
 
   const postData = (data) => {
     axios.post("http://localhost:8000/api/owner", data).then((resp) => {
@@ -65,21 +72,21 @@ const OwnerCreation = () => {
     });
   };
 
-  const inputHandlerForSelect = (selectedOption) => {
+  const inputHandlerForSelect = (selectedOption, name) => {
     if (selectedOption) {
       setInput((prev) => {
-        return { ...prev, company: selectedOption };
+        return { ...prev, [name]: selectedOption };
       });
-      //   setInputValidation((prev) => {
-      //     return {...prev ,calltypeErr: false};
-      //    })
+      setInputValidation((prev) => {
+        return { ...prev, [`${name}Err`]: false };
+      });
     } else {
       setInput((prev) => {
-        return { ...prev, company: null };
+        return { ...prev, [name]: null };
       });
-      //   setInputValidation((prev) => {
-      //     return {...prev ,calltypeErr: true};
-      //    })
+      setInputValidation((prev) => {
+        return { ...prev, [`${name}Err`]: true };
+      });
     }
   };
 
@@ -100,13 +107,12 @@ const OwnerCreation = () => {
     e.preventDefault();
 
     let data = {
-      company_id: input.company,
-      bike_id: input.bike,
+      company_id: input.company.value,
+      bike_id: input.bike.value,
+      price: input.price,
       owner_name: input.owner,
-      // activeStatus : input.activeStatus,
-      // tokenId : localStorage.getItem("token")
     };
-    // console.log('DATA',data)
+
     if (data) {
       postData(data);
     }
@@ -129,8 +135,8 @@ const OwnerCreation = () => {
                       id="company"
                       isClearable="true"
                       isSearchable="true"
-                      onChange={(e) => {
-                        inputHandlerForSelect(e);
+                      onChange={(selectedOption) => {
+                        inputHandlerForSelect(selectedOption, "company");
                       }}
                       value={input.company}
                     />
@@ -138,17 +144,29 @@ const OwnerCreation = () => {
                   <h5>Bike</h5>
                   <div className="mb-3">
                     <Select
-                      options={bikeList.options}
+                      options={bikeList}
                       name="bike"
                       id="bike"
                       isClearable="true"
                       isSearchable="true"
-                      onChange={(e) => {
-                        inputHandlerForSelect(e);
+                      onChange={(selectedOption) => {
+                        inputHandlerForSelect(selectedOption, "bike");
                       }}
                       value={input.bike}
                     />
                   </div>
+                  <h5>Price</h5>
+                  <div className="mb-3">
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="price"
+                      name="price"
+                      value={input.price}
+                      onChange={inputHandler}
+                    />
+                  </div>
+
                   <h5>Owner</h5>
                   <div className="mb-3">
                     <input

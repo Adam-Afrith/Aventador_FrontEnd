@@ -65,16 +65,16 @@ const BikeCreation = () => {
       setInput((prev) => {
         return { ...prev, company: selectedOption };
       });
-      //   setInputValidation((prev) => {
-      //     return {...prev ,calltypeErr: false};
-      //    })
+      setInputValidation((prev) => {
+        return { ...prev, calltypeErr: false };
+      });
     } else {
       setInput((prev) => {
         return { ...prev, company: null };
       });
-      //   setInputValidation((prev) => {
-      //     return {...prev ,calltypeErr: true};
-      //    })
+      setInputValidation((prev) => {
+        return { ...prev, calltypeErr: true };
+      });
     }
   };
 
@@ -95,17 +95,18 @@ const BikeCreation = () => {
     e.preventDefault();
 
     let data = {
-      company_id: input.company,
+      company_id: input.company.value,
       bike_name: input.bike,
       // activeStatus : input.activeStatus,
       // tokenId : localStorage.getItem("token")
     };
     // console.log('DATA',data)
     if (data) {
+      console.log("DATA", data);
       postData(data);
     }
   };
-
+  console.log("input", input);
   return (
     <div>
       <h2>Bike Creation</h2>
@@ -129,6 +130,11 @@ const BikeCreation = () => {
                       value={input.company}
                     />
                   </div>
+                  {/* <div className="col-6 ml-n5 mt-2">
+                    <span style={{ color: "red" }}>
+                      {companyValidation.company}
+                    </span>
+                  </div> */}
                   <h5>Bike</h5>
                   <div className="mb-3">
                     <input
@@ -139,6 +145,13 @@ const BikeCreation = () => {
                       value={input.bike}
                       onChange={inputHandler}
                     />
+                    {inputValidation.bikeErr && (
+                      <div className="pt-1">
+                        <span className="text-danger font-weight-bold">
+                          Enter Bike Name
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <br />
