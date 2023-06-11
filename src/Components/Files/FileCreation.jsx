@@ -111,6 +111,7 @@ const FileCreation = () => {
     }
   };
 
+  console.log('input',input)
   return (
     <>
       <h3>File Creation</h3>
