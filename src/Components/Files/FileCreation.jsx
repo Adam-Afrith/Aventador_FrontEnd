@@ -41,7 +41,29 @@ const FileCreation = () => {
           confirmButtonColor: "#5156ed",
         });
 
-        navigate(`/FileList`);
+        // navigate(`/FileList`);
+      } else if (resp.data.status === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "File",
+          text: resp.data.errors,
+          confirmButtonColor: "#5156ed",
+        });
+      }
+    });
+  };
+
+  const postFileData = (fileData) => {
+    axios.post("http://localhost:8000/api/fileupload", fileData).then((resp) => {
+      if (resp.data.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "File",
+          text: resp.data.message,
+          confirmButtonColor: "#5156ed",
+        });
+
+        // navigate(`/FileList`);
       } else if (resp.data.status === 400) {
         Swal.fire({
           icon: "error",
@@ -88,7 +110,7 @@ const FileCreation = () => {
     e.preventDefault();
 
     let data = {
-      vehicle_name: input.bike,
+      vehicle_name: input.bike.value,
       description: input.description,
       // activeStatus : input.activeStatus,
       // tokenId : localStorage.getItem("token")
@@ -102,12 +124,12 @@ const FileCreation = () => {
   const fileSubmitHandler = (e) => {
     e.preventDefault();
 
-    let data = {
+    let fileData = {
       file: input.file,
     };
 
-    if (data) {
-      postData(data);
+    if (fileData) {
+      postFileData(fileData);
     }
   };
 

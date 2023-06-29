@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import logo from "../../assets/logos/letter-c.png";
+import Swal from "sweetalert2";
 import {
   Box,
   Button,
@@ -29,6 +30,8 @@ import {
 } from "react-table";
 
 const CompanyCreation = () => {
+
+  const { id } = useParams();
   const [company, setCompany] = useState([]);
 
   useEffect(() => {
@@ -41,6 +44,60 @@ const CompanyCreation = () => {
   const Create = () => {
     navigate("/CompanyCreation");
   };
+
+  const editCompany = (id) => {
+    navigate(`/CompanyCreation/${id}`);
+  };
+
+  const deleteHandler = (id) => {
+    deleteData(id);
+  };
+
+  const deleteData = (id) => {
+    
+    Swal.fire({
+      icon: "warning",
+      title: "Delete Company",
+      text: "Are you sure you want to delete this company?",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:8000/api/company/${id}`)
+          .then((res) => {
+            if (res.data.status === 200) {
+              Swal.fire({
+                icon: "success",
+                title: "Company",
+                text: "Deleted Successfully!",
+                confirmButtonColor: "#5156ed",
+              });
+              navigate(`/CompanyList`);
+            } else if (res.data.status === 400) {
+              Swal.fire({
+                icon: "error",
+                title: "Company",
+                text: res.data.errors,
+                confirmButtonColor: "#5156ed",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err.response.data.message);
+            Swal.fire({
+              icon: "error",
+              title: "Call Type",
+              text: err.response.data.message || err,
+              confirmButtonColor: "#5156ed",
+            });
+          });
+      }
+    });
+  };
+
 
   const data = React.useMemo(() => company, [company]);
   const columns = React.useMemo(
@@ -58,15 +115,22 @@ const CompanyCreation = () => {
         Header: "Action",
         Cell: ({ row }) => (
           <div>
-            <Fab color="secondary" size="small" aria-label="edit">
-              <Edit />
-            </Fab>
-            <IconButton aria-label="edit">
-              <Edit />
-            </IconButton>
-            <IconButton aria-label="delete">
-              <Delete />
-            </IconButton>
+            <Tooltip title="Edit">
+              <IconButton
+                aria-label="edit"
+                onClick={() => editCompany(row.original.id)}
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="delete"
+                onClick={() => deleteHandler(row.original.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </div>
         ),
       },

@@ -140,6 +140,13 @@ const OwnerCreation = () => {
                       }}
                       value={input.company}
                     />
+                    {inputValidation.companyErr && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Enter Company Name
+                                                </span>
+                                            </div>
+                                        )}
                   </div>
                   <h5>Bike</h5>
                   <div className="mb-3">
@@ -154,6 +161,13 @@ const OwnerCreation = () => {
                       }}
                       value={input.bike}
                     />
+                    {inputValidation.bikeErr && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Enter Bike Name
+                                                </span>
+                                            </div>
+                                        )}
                   </div>
                   <h5>Price</h5>
                   <div className="mb-3">
@@ -165,6 +179,13 @@ const OwnerCreation = () => {
                       value={input.price}
                       onChange={inputHandler}
                     />
+                    {inputValidation.price && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Enter Price
+                                                </span>
+                                            </div>
+                                        )}
                   </div>
 
                   <h5>Owner</h5>
@@ -177,6 +198,13 @@ const OwnerCreation = () => {
                       value={input.owner}
                       onChange={inputHandler}
                     />
+                    {inputValidation.owner && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Enter Owner Name
+                                                </span>
+                                            </div>
+                                        )}
                   </div>
 
                   <br />

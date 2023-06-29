@@ -15,6 +15,7 @@ import Login from "./Components/Login/Login";
 import FileList from "./Components/Files/FileList";
 import FileCreation from "./Components/Files/FileCreation";
 import AttendanceLog from "./Components/AttendanceLog/AttendanceLog";
+import UserCreation from "./Components/Users/UserCreation";
 import Master from "./Master/Master";
 
 function Routed() {
@@ -23,10 +24,13 @@ function Routed() {
       <Route path="/" element={<Login />} />
       <Route path="Dashboard" element={<Dashboard />} />
       <Route path="CompanyCreation" element={<CompanyCreation />} />
+      <Route path="CompanyCreation/:id" element={<CompanyCreation />} />
       <Route path="CompanyList" element={<CompanyList />} />
       <Route path="BikeCreation" element={<BikeCreation />} />
+      <Route path="BikeCreation/:id" element={<BikeCreation />} />
       <Route path="BikeList" element={<BikeList />} />
       <Route path="OwnerCreation" element={<OwnerCreation />} />
+      <Route path="OwnerCreation/:id" element={<OwnerCreation />} />
       <Route path="OwnerList" element={<OwnerList />} />
       <Route path="Sidebar" element={<Sidebar />} />
       <Route path="Menus" element={<Menus />} />
@@ -34,6 +38,7 @@ function Routed() {
       <Route path="FileList" element={<FileList />} />
       <Route path="FileCreation" element={<FileCreation />} />
       <Route path="AttendanceLog" element={<AttendanceLog />} />
+      <Route path="UserCreation" element={<UserCreation />} />
       <Route path="*" element={<Page404 />} />
       <Route path="Master" element={<Master />} />
     </Routes>

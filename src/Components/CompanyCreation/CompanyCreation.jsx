@@ -1,6 +1,5 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -13,13 +12,28 @@ const initialStateErr = {
 };
 
 const CompanyCreation = () => {
-  const [input, setInput] = useState(initialState);
-  const [inputValidation, setInputValidation] = useState(initialStateErr);
-
+  const { id } = useParams();
   const navigate = useNavigate();
   const cancelHandler = () => {
     navigate("/CompanyList");
   };
+
+  const [input, setInput] = useState(initialState);
+  const [inputValidation, setInputValidation] = useState(initialStateErr);
+
+  
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:8000/api/company/${id}`).then((resp) => {
+        setInput({
+          company: resp?.data?.company[0]?.company_name
+        });
+      });
+    }
+  }, [id]);
+
+  console.log('input',input)
 
   const postData = (data) => {
     axios.post("http://localhost:8000/api/company", data).then((resp) => {
@@ -42,6 +56,42 @@ const CompanyCreation = () => {
       }
     });
   };
+
+  const putData = (data, id) => {
+    axios
+      .put(`http://localhost:8000/api/company/${id}`, data)
+      .then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Company",
+            text: "Updated Successfully!",
+            confirmButtonColor: "#5156ed",
+          });
+          setInput(initialState);
+          navigate(`/CompanyList`);
+        } else if (res.data.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Company",
+            text: res.data.errors,
+            confirmButtonColor: "#5156ed",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("err", err.response.data.message);
+        Swal.fire({
+          icon: "error",
+          title: "Call Type",
+          text: err.response.data.message || err,
+          confirmButtonColor: "#5156ed",
+        });
+      });
+  };
+
+ 
+
   const inputHandler = (e) => {
     setInput({
       ...input,
@@ -60,20 +110,16 @@ const CompanyCreation = () => {
 
     let data = {
       company_name: input.company,
-      // activeStatus : input.activeStatus,
-      // tokenId : localStorage.getItem("token")
     };
-    // console.log('DATA',data)
-    if (data) {
-      postData(data);
-    }
 
-    // if(!id){
-    //     postData(data);
-    // }else{
-    //     putData(data, id);
-    // }
+    if (!id) {
+      postData(data);
+    } else {
+      putData(data, id);
+    }
   };
+
+  
 
   return (
     <>
@@ -82,7 +128,7 @@ const CompanyCreation = () => {
           <h2>Company Creation</h2>
         </div>
       </div>
-      <br></br>
+      <br />
       <form>
         <div className="container">
           <div className="row d-flex justify-content-center">
@@ -99,10 +145,20 @@ const CompanyCreation = () => {
                       value={input.company}
                       onChange={inputHandler}
                     />
+                    {inputValidation.company && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Enter Company
+                                                </span>
+                                            </div>
+                                        )}
                   </div>
                   <br />
-                  <button className="btn btn-primary" onClick={submitHandler}>
-                    Submit
+                  <button
+                    className="btn btn-primary"
+                    onClick={submitHandler}
+                  >
+                    {id ? "Update" : "Submit"}
                   </button>
                   <span>&nbsp;&nbsp;&nbsp;</span>
                   <button className="btn btn-dark" onClick={cancelHandler}>

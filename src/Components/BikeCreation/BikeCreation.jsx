@@ -66,14 +66,14 @@ const BikeCreation = () => {
         return { ...prev, company: selectedOption };
       });
       setInputValidation((prev) => {
-        return { ...prev, calltypeErr: false };
+        return { ...prev, companyErr: false };
       });
     } else {
       setInput((prev) => {
         return { ...prev, company: null };
       });
       setInputValidation((prev) => {
-        return { ...prev, calltypeErr: true };
+        return { ...prev, companyErr: true };
       });
     }
   };
@@ -130,11 +130,13 @@ const BikeCreation = () => {
                       value={input.company}
                     />
                   </div>
-                  {/* <div className="col-6 ml-n5 mt-2">
-                    <span style={{ color: "red" }}>
-                      {companyValidation.company}
-                    </span>
-                  </div> */}
+                  {inputValidation.companyErr && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Enter Company
+                                                </span>
+                                            </div>
+                                        )}
                   <h5>Bike</h5>
                   <div className="mb-3">
                     <input
@@ -145,7 +147,7 @@ const BikeCreation = () => {
                       value={input.bike}
                       onChange={inputHandler}
                     />
-                    {inputValidation.bikeErr && (
+                    {inputValidation.bike && (
                       <div className="pt-1">
                         <span className="text-danger font-weight-bold">
                           Enter Bike Name
