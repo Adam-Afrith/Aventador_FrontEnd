@@ -17,7 +17,6 @@ import {
   Tooltip,
   Fab,
 } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -29,18 +28,76 @@ import {
 } from "react-table";
 
 const OwnerList = () => {
-  const [owner, setOwner] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/owner").then((resp) => {
-      setOwner(resp.data.owner);
-      console.log("DATA:", resp);
-    });
-  }, []);
 
   const navigate = useNavigate();
   const Create = () => {
     navigate("/OwnerCreation");
+  };
+
+  const editOwner = (id) => {
+    navigate(`/OwnerCreation/${id}`);
+  };
+
+  const [owner, setOwner] = useState([]);
+
+  useEffect(() => {
+    fetchOwnerData();
+  }, []);
+
+  const fetchOwnerData = () => {
+    axios.get("http://localhost:8000/api/owner").then((resp) => {
+      setOwner(resp.data.owner);
+    });
+  };
+
+ 
+  const deleteHandler = (id) => {
+    deleteData(id);
+  };
+
+  const deleteData = (id) => {
+    
+    Swal.fire({
+      icon: "warning",
+      title: "Delete Owner",
+      text: "Are you sure you want to delete this Owner?",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:8000/api/owner/${id}`)
+          .then((res) => {
+            if (res.data.status === 200) {
+              Swal.fire({
+                icon: "success",
+                title: "Owner",
+                text: "Deleted Successfully!",
+                confirmButtonColor: "#5156ed",
+              });
+              fetchOwnerData();
+            } else if (res.data.status === 400) {
+              Swal.fire({
+                icon: "error",
+                title: "Owner",
+                text: res.data.errors,
+                confirmButtonColor: "#5156ed",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err.response.data.message);
+            Swal.fire({
+              icon: "error",
+              title: "Owner",
+              text: err.response.data.message || err,
+              confirmButtonColor: "#5156ed",
+            });
+          });
+      }
+    });
   };
 
   const data = React.useMemo(() => owner, [owner]);
@@ -71,15 +128,23 @@ const OwnerList = () => {
         Header: "Action",
         Cell: ({ row }) => (
           <div>
-            <Fab color="secondary" size="small" aria-label="edit">
-              <EditIcon />
-            </Fab>
-            <IconButton aria-label="edit">
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Edit">
+              <IconButton
+                aria-label="edit"
+                onClick={() => editOwner(row.original.oid)}
+              >
+                {/* bid is the ownerid in backend */}
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="delete"
+                onClick={() => deleteHandler(row.original.oid)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </div>
         ),
       },

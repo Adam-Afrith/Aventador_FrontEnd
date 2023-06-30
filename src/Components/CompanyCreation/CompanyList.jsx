@@ -35,10 +35,15 @@ const CompanyCreation = () => {
   const [company, setCompany] = useState([]);
 
   useEffect(() => {
+    fetchCompanyData();
+
+  }, []);
+
+  const fetchCompanyData = () => {
     axios.get("http://localhost:8000/api/company").then((resp) => {
       setCompany(resp.data.company);
     });
-  }, []);
+  };
 
   const navigate = useNavigate();
   const Create = () => {
@@ -75,7 +80,7 @@ const CompanyCreation = () => {
                 text: "Deleted Successfully!",
                 confirmButtonColor: "#5156ed",
               });
-              navigate(`/CompanyList`);
+              fetchCompanyData(); // Fetch updated data after deletion
             } else if (res.data.status === 400) {
               Swal.fire({
                 icon: "error",
@@ -89,7 +94,7 @@ const CompanyCreation = () => {
             console.log("err", err.response.data.message);
             Swal.fire({
               icon: "error",
-              title: "Call Type",
+              title: "Company",
               text: err.response.data.message || err,
               confirmButtonColor: "#5156ed",
             });

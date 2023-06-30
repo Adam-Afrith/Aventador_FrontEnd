@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import Swal from "sweetalert2";
@@ -16,6 +16,8 @@ const initialStateErr = {
 };
 
 const BikeCreation = () => {
+
+  const { id } = useParams();
   const navigate = useNavigate();
   const cancelHandler = () => {
     navigate("/BikeList");
@@ -31,6 +33,21 @@ const BikeCreation = () => {
       //console.log('DATA:',resp)
     });
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      console.log('ID--',id)
+      axios.get(`http://localhost:8000/api/bike/${id}`).then((resp) => {
+        setInput((prevInput) => ({
+          ...prevInput,
+          company: companyList.find((x)=>x.value == resp.data?.bike[0]?.cid),
+          bike: resp?.data?.bike[0]?.bike_name,
+        }));
+      });
+    }
+  }, [id,companyList]);
+
+
 
   const Options = [
     { value: "chocolate", label: "Chocolate" },
@@ -58,6 +75,39 @@ const BikeCreation = () => {
         });
       }
     });
+  };
+
+  const putData = (data, id) => {
+    axios
+      .put(`http://localhost:8000/api/bike/${id}`, data)
+      .then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Bike",
+            text: "Updated Successfully!",
+            confirmButtonColor: "#5156ed",
+          });
+          setInput(initialState);
+          navigate(`/BikeList`);
+        } else if (res.data.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Bike",
+            text: res.data.errors,
+            confirmButtonColor: "#5156ed",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("err", err.response.data.message);
+        Swal.fire({
+          icon: "error",
+          title: "Bike",
+          text: err.response.data.message || err,
+          confirmButtonColor: "#5156ed",
+        });
+      });
   };
 
   const inputHandlerForSelect = (selectedOption) => {
@@ -101,9 +151,10 @@ const BikeCreation = () => {
       // tokenId : localStorage.getItem("token")
     };
     // console.log('DATA',data)
-    if (data) {
-      console.log("DATA", data);
+    if (!id) {
       postData(data);
+    } else {
+      putData(data, id);
     }
   };
   console.log("input", input);
@@ -158,7 +209,7 @@ const BikeCreation = () => {
 
                   <br />
                   <button className="btn btn-primary" onClick={submitHandler}>
-                    Submit
+                  {id ? "Update" : "Submit"}
                   </button>
                   <span>&nbsp;&nbsp;&nbsp;</span>
                   <button className="btn btn-dark" onClick={cancelHandler}>

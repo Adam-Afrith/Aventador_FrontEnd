@@ -83,7 +83,7 @@ const CompanyCreation = () => {
         console.log("err", err.response.data.message);
         Swal.fire({
           icon: "error",
-          title: "Call Type",
+          title: "Company",
           text: err.response.data.message || err,
           confirmButtonColor: "#5156ed",
         });

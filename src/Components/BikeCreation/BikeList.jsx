@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import logo from "../../assets/logos/bike.png";
+import Swal from "sweetalert2";
 import {
   Box,
   Button,
@@ -17,7 +18,6 @@ import {
   Tooltip,
   Fab,
 } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -29,19 +29,78 @@ import {
 } from "react-table";
 
 const BikeList = () => {
-  const [bike, setBike] = useState([]);
 
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/bike").then((resp) => {
-      setBike(resp.data.bike);
-      console.log("DATA:", resp);
-    });
-  }, []);
-
+  const { id } = useParams();
   const navigate = useNavigate();
   const Create = () => {
     navigate("/BikeCreation");
   };
+
+  const editBike = (id) => {
+    navigate(`/BikeCreation/${id}`);
+  };
+
+  const [bike, setBike] = useState([]);
+
+  useEffect(() => {
+    fetchBikeData();
+  }, []);
+
+  const fetchBikeData = () => {
+    axios.get("http://localhost:8000/api/bike").then((resp) => {
+      setBike(resp.data.bike);
+    });
+  };
+
+  const deleteHandler = (id) => {
+    deleteData(id);
+  };
+
+  const deleteData = (id) => {
+    
+    Swal.fire({
+      icon: "warning",
+      title: "Delete Bike",
+      text: "Are you sure you want to delete this bike?",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:8000/api/bike/${id}`)
+          .then((res) => {
+            if (res.data.status === 200) {
+              Swal.fire({
+                icon: "success",
+                title: "Bike",
+                text: "Deleted Successfully!",
+                confirmButtonColor: "#5156ed",
+              });
+              fetchBikeData();
+            } else if (res.data.status === 400) {
+              Swal.fire({
+                icon: "error",
+                title: "Bike",
+                text: res.data.errors,
+                confirmButtonColor: "#5156ed",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err.response.data.message);
+            Swal.fire({
+              icon: "error",
+              title: "Bike",
+              text: err.response.data.message || err,
+              confirmButtonColor: "#5156ed",
+            });
+          });
+      }
+    });
+  };
+
 
   const data = React.useMemo(() => bike, [bike]);
   const columns = React.useMemo(
@@ -63,15 +122,23 @@ const BikeList = () => {
         Header: "Action",
         Cell: ({ row }) => (
           <div>
-            <Fab color="secondary" size="small" aria-label="edit">
-              <EditIcon />
-            </Fab>
-            <IconButton aria-label="edit">
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Edit">
+              <IconButton
+                aria-label="edit"
+                onClick={() => editBike(row.original.bid)}
+              >
+                {/* bid is the bikeid in backend */}
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="delete"
+                onClick={() => deleteHandler(row.original.bid)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </div>
         ),
       },

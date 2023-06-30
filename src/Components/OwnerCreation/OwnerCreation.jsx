@@ -40,7 +40,6 @@ const OwnerCreation = () => {
 
   useEffect(() => {
     if (input.company?.value) {
-      console.log("ID", input.company?.value);
       axios
         .get(`http://localhost:8000/api/bike/list/${input.company?.value}`)
         .then((resp) => {
@@ -49,6 +48,21 @@ const OwnerCreation = () => {
         });
     }
   }, [input.company]);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:8000/api/owner/${id}`).then((resp) => {
+        
+        setInput((prevInput) => ({
+          ...prevInput,
+          company: companyList.find((x)=>x.value == resp.data?.owner[0]?.cid),
+          bike: bikeList.find((x)=>x.value == resp.data?.owner[0]?.bid),
+          price: resp?.data?.owner[0]?.price,
+          owner: resp?.data?.owner[0]?.owner_name,
+        }));
+      });
+    }
+  }, [id,companyList,bikeList]);
 
   const postData = (data) => {
     axios.post("http://localhost:8000/api/owner", data).then((resp) => {
@@ -103,6 +117,39 @@ const OwnerCreation = () => {
     }
   };
 
+  const putData = (data, id) => {
+    axios
+      .put(`http://localhost:8000/api/owner/${id}`, data)
+      .then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Owner",
+            text: "Updated Successfully!",
+            confirmButtonColor: "#5156ed",
+          });
+          setInput(initialState);
+          navigate(`/OwnerList`);
+        } else if (res.data.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Owner",
+            text: res.data.errors,
+            confirmButtonColor: "#5156ed",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("err", err.response.data.message);
+        Swal.fire({
+          icon: "error",
+          title: "Owner",
+          text: err.response.data.message || err,
+          confirmButtonColor: "#5156ed",
+        });
+      });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -113,8 +160,10 @@ const OwnerCreation = () => {
       owner_name: input.owner,
     };
 
-    if (data) {
+    if (!id) {
       postData(data);
+    } else {
+      putData(data, id);
     }
   };
 
@@ -209,7 +258,7 @@ const OwnerCreation = () => {
 
                   <br />
                   <button className="btn btn-primary" onClick={submitHandler}>
-                    Submit
+                  {id ? "Update" : "Submit"}
                   </button>
                   <span>&nbsp;&nbsp;&nbsp;</span>
                   <button className="btn btn-dark" onClick={cancelHandler}>
