@@ -14,6 +14,8 @@ const initialStateErr = {
   bikeErr: "",
 };
 
+
+
 const FileCreation = () => {
   const navigate = useNavigate();
   const cancelHandler = () => {
@@ -22,6 +24,7 @@ const FileCreation = () => {
 
   const [input, setInput] = useState(initialState);
   const [bikeList, setBikeList] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [inputValidation, setInputValidation] = useState(initialStateErr);
 
   useEffect(() => {
@@ -53,27 +56,64 @@ const FileCreation = () => {
     });
   };
 
-  const postFileData = (fileData) => {
-    axios.post("http://localhost:8000/api/fileupload", fileData).then((resp) => {
-      if (resp.data.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "File",
-          text: resp.data.message,
-          confirmButtonColor: "#5156ed",
-        });
-
-        // navigate(`/FileList`);
-      } else if (resp.data.status === 400) {
-        Swal.fire({
-          icon: "error",
-          title: "File",
-          text: resp.data.errors,
-          confirmButtonColor: "#5156ed",
-        });
-      }
-    });
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
+
+  const fileSubmitHandler = (e) => {
+    
+    e.preventDefault();
+    const data = new FormData();
+    data.append("file", selectedFile);
+    // data.append("vehicle_name", input.bike.value);
+    // data.append("description", input.description);
+
+    axios
+      .post("http://localhost:8000/api/fileupload", data)
+      .then((resp) => {
+        if (resp.data.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "File",
+            text: resp.data.message,
+            confirmButtonColor: "#5156ed",
+          });
+
+          // navigate(`/FileList`);
+        } else if (resp.data.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "File",
+            text: resp.data.errors,
+            confirmButtonColor: "#5156ed",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  // const postFileData = (fileData) => {
+  //   axios.post("http://localhost:8000/api/fileupload", fileData).then((resp) => {
+  //     if (resp.data.status === 200) {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "File",
+  //         text: resp.data.message,
+  //         confirmButtonColor: "#5156ed",
+  //       });
+
+  //       // navigate(`/FileList`);
+  //     } else if (resp.data.status === 400) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "File",
+  //         text: resp.data.errors,
+  //         confirmButtonColor: "#5156ed",
+  //       });
+  //     }
+  //   });
+  // };
 
   const inputHandlerForSelect = (selectedOption) => {
     if (selectedOption) {
@@ -121,17 +161,17 @@ const FileCreation = () => {
     }
   };
 
-  const fileSubmitHandler = (e) => {
-    e.preventDefault();
+  // const fileSubmitHandler = (e) => {
+  //   e.preventDefault();
 
-    let fileData = {
-      file: input.file,
-    };
+  //   let fileData = {
+  //     file: input.file,
+  //   };
 
-    if (fileData) {
-      postFileData(fileData);
-    }
-  };
+  //   if (fileData) {
+  //     postFileData(fileData);
+  //   }
+  // };
 
   console.log('input',input)
   return (
@@ -179,7 +219,7 @@ const FileCreation = () => {
                   </button>
                 </div>
                 <div className="card-body">
-                  <input type="file" />
+                  <input type="file" onChange={handleFileChange} />
                   <br />
                   <br />
                   <button
