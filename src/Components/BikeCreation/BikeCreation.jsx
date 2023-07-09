@@ -160,7 +160,7 @@ const BikeCreation = () => {
   console.log("input", input);
   return (
     <div>
-      <h2>Bike Creation</h2>
+      <h2>Bike Creation<i class="fa-solid fa-gear fa-spin"></i></h2>
       <form>
         <div className="container">
           <div className="row d-flex justify-content-center">
@@ -180,14 +180,15 @@ const BikeCreation = () => {
                       }}
                       value={input.company}
                     />
-                  </div>
-                  {inputValidation.companyErr && (
+                     {inputValidation.companyErr && (
                                             <div className="pt-1">
                                                 <span className="text-danger font-weight-bold">
                                                     Enter Company
                                                 </span>
                                             </div>
                                         )}
+                  </div>
+                 
                   <h5>Bike</h5>
                   <div className="mb-3">
                     <input

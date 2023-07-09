@@ -127,6 +127,7 @@ const CompanyCreation = () => {
         <div className="card-body">
           <h2>Company Creation</h2>
         </div>
+        
       </div>
       <br />
       <form>

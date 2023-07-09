@@ -25,6 +25,7 @@ const FileCreation = () => {
   const [input, setInput] = useState(initialState);
   const [bikeList, setBikeList] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [inputValidation, setInputValidation] = useState(initialStateErr);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const FileCreation = () => {
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    setPreviewImage(URL.createObjectURL(event.target.files[0])); // Generate image preview
   };
 
   const fileSubmitHandler = (e) => {
@@ -120,16 +122,16 @@ const FileCreation = () => {
       setInput((prev) => {
         return { ...prev, bike: selectedOption };
       });
-      //   setInputValidation((prev) => {
-      //     return {...prev ,calltypeErr: false};
-      //    })
+        setInputValidation((prev) => {
+          return {...prev ,bikeErr: false};
+         })
     } else {
       setInput((prev) => {
         return { ...prev, bike: null };
       });
-      //   setInputValidation((prev) => {
-      //     return {...prev ,calltypeErr: true};
-      //    })
+        setInputValidation((prev) => {
+          return {...prev ,bikeErr: true};
+         })
     }
   };
 
@@ -176,7 +178,9 @@ const FileCreation = () => {
   console.log('input',input)
   return (
     <>
-      <h3>File Creation</h3>
+      <h3>File Creation<i class="fa-solid fa-file"></i></h3>
+      
+     
       <form>
         <div className="container">
           <div className="row d-flex justify-content-center">
@@ -196,7 +200,16 @@ const FileCreation = () => {
                       }}
                       value={input.bike}
                     />
+                     {inputValidation.bikeErr && (
+                                            <div className="pt-1">
+                                                <span className="text-danger font-weight-bold">
+                                                    Select Vehicle
+                                                </span>
+                                            </div>
+                                        )}
                   </div>
+                 
+
                   <h5>Description</h5>
                   <div className="mb-3">
                     <input
@@ -219,9 +232,20 @@ const FileCreation = () => {
                   </button>
                 </div>
                 <div className="card-body">
+                <i class="fa-sharp fa-regular fa-image fa-2xl"></i>
+                <span>&nbsp;&nbsp;&nbsp;</span>
                   <input type="file" onChange={handleFileChange} />
                   <br />
                   <br />
+                  {previewImage && (
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      style={{ width: "100px", maxHeight: "200px" }}
+                    />
+                  )}
+                  <br/>
+                  <br/>
                   <button
                     className="btn btn-primary"
                     onClick={fileSubmitHandler}

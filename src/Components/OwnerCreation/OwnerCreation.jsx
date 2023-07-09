@@ -169,7 +169,7 @@ const OwnerCreation = () => {
 
   return (
     <div>
-      <h2>Owner Creation</h2>
+      <h2>Owner Creation<i class="fa-sharp fa-solid fa-shield-halved fa-fade"></i></h2>
       <form>
         <div className="container">
           <div className="row d-flex justify-content-center">
