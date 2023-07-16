@@ -133,7 +133,7 @@ const CompanyCreation = () => {
       <form>
         <div className="container">
           <div className="row d-flex justify-content-center">
-            <div className="col-10">
+            <div className="col-6">
               <div className="card card-primary p-4 border-0 shadow-lg">
                 <div className="card-body">
                   <h5>Company</h5>

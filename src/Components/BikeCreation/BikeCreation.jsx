@@ -160,7 +160,7 @@ const BikeCreation = () => {
   console.log("input", input);
   return (
     <div>
-      <h2>Bike Creation<i class="fa-solid fa-gear fa-spin"></i></h2>
+      <h2>Bike Creation<i className="fa-solid fa-gear fa-spin"></i></h2>
       <form>
         <div className="container">
           <div className="row d-flex justify-content-center">

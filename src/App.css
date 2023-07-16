@@ -216,3 +216,66 @@
 	background-color: black;
 }
 /************End dashboard***************/
+
+/************darkMode****************/
+#light {
+	background-color: #f3ebf6;
+}
+
+#dark {
+	background-color: #46045e;
+}
+
+/* .switch {
+	display: flex;
+	width: 100vw;
+	height: 100px;
+	justify-content: center;
+	align-items: center;
+} */
+
+.switch label {
+	margin : 10px;
+}
+
+#light .switch label {
+	color:black;
+}
+
+#dark .switch label {
+	color:white;
+}
+
+.Header-List{
+	display: flex;
+}
+
+#dark .footer-content{
+	color: #61dafb;
+}
+
+#light .main-table{
+	background-color: #ffffff;
+}
+
+
+#dark .main-table td {
+	color: white;
+  }
+
+#dark .main-table .page-no {
+	color: white;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+

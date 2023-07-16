@@ -189,9 +189,11 @@ const OwnerList = () => {
       </Fab>
       <h3>Owner List</h3>
       <div className="card card-primary p-4 border-0 shadow-lg">
-        <div>
+        <div align="right">
           <input
             type="text"
+            className="form-control form-control-sm mb-4"
+            style={{ width: '200px' }}
             value={globalFilter || ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search..."
@@ -230,10 +232,10 @@ const OwnerList = () => {
           </tbody>
         </table>
         <div>
-          <button onClick={() => gotoPage(0)}>{"<<"}</button>{" "}
-          <button onClick={() => previousPage()}>{"<"}</button>{" "}
-          <button onClick={() => nextPage()}>{">"}</button>{" "}
-          <button onClick={() => gotoPage(pageCount - 1)}>{">>"}</button>{" "}
+        <button className="btn btn-lg"  onClick={() => gotoPage(0)}><i className="fa-sharp fa-solid fa-circle-left"></i></button>
+          <button className="btn btn-lg" onClick={() => previousPage()}><i className="fa-sharp fa-solid fa-circle-chevron-left"></i></button>
+          <button className="btn btn-lg" onClick={() => nextPage()}><i className="fa-sharp fa-solid fa-circle-chevron-right"></i></button>
+          <button className="btn btn-lg" onClick={() => gotoPage(pageCount - 1)}><i className="fa-sharp fa-solid fa-circle-right"></i></button>
           <span>
             Page{" "}
             <strong>

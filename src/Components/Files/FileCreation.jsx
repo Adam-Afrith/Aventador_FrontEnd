@@ -212,13 +212,14 @@ const FileCreation = () => {
 
                   <h5>Description</h5>
                   <div className="mb-3">
-                    <input
-                      type="text"
+                   
+                    <textarea 
                       className="form-control"
                       id="description"
                       name="description"
                       value={input.description}
-                      onChange={inputHandler}
+                      onChange={inputHandler} 
+                      rows="4"
                     />
                   </div>
 
