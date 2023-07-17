@@ -1,28 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
-const Header = () => {
+
+function Header() {
+
+
   return (
-    <div className="card card-primary p-12 border-0 shadow-lg" style={{ backgroundColor: '#f0f0f0', padding: '12px 20px' }}>
-   <ul className="Header-List" style={{ listStyleType: 'none', padding: 0 }}>
-        <li style={{ margin: '0 5px' }}>
-          <Link to="/CompanyList" style={{ listStyleType: 'none',textDecoration: 'none', color: '#333' }}>Company</Link>
-        </li>
-        <li style={{ margin: '0 5px' }}>
-          <Link to="/BikeList" style={{ textDecoration: 'none', color: '#333' }}>Bike</Link>
-        </li>
-        <li style={{ margin: '0 5px' }}>
-          <Link to="/OwnerList" style={{ textDecoration: 'none', color: '#333' }}>Owner</Link>
-        </li>
-        <li style={{ margin: '0 5px' }}>
-          <Link to="/FileList" style={{ textDecoration: 'none', color: '#333' }}>Files</Link>
-        </li>
-        <li style={{ margin: '0 5px' }}>
-          <Link to="/AttendanceLog" style={{ textDecoration: 'none', color: '#333' }}>Attendance</Link>
-        </li>
-      </ul>
-    </div>
+    <Navbar expand="lg" className="bg-body-tertiary" >
+      <Container>
+        <Navbar.Brand href="/Dashboard">Aventador</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/CompanyList">Company</Nav.Link>
+            <Nav.Link href="/BikeList">Bike</Nav.Link>
+            <Nav.Link href="/OwnerList">Owner</Nav.Link>
+            <NavDropdown title="More" id="basic-nav-dropdown">
+              <NavDropdown.Item href="FileList">Files</NavDropdown.Item>
+              <NavDropdown.Item href="/AttendanceLog">
+                Attendance Log
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/Design">Design</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
-};
+}
 
 export default Header;

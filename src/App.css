@@ -215,11 +215,19 @@
 .calendar{
 	background-color: black;
 }
+
+.cards{
+	display: flex;
+	justify-content: center;
+	/* align-items: center; */
+	gap: 20px;
+}
 /************End dashboard***************/
 
 /************darkMode****************/
 #light {
-	background-color: #f3ebf6;
+	/* background-color: #f3ebf6; */
+	background-color: #ffffff;
 }
 
 #dark {
@@ -259,13 +267,18 @@
 }
 
 
-#dark .main-table td {
+/* #dark .main-table td {
 	color: white;
-  }
+  } */
 
 #dark .main-table .page-no {
 	color: white;
   }
+
+main {
+	min-height: 80vh;
+}
+  
   
   
   

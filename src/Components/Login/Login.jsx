@@ -112,10 +112,11 @@ const Login = () => {
                       />
                     </div>
                     <br />
-
+                    <div className="d-grid gap-2">
                     <button className="btn btn-dark" onClick={submitHandler}>
                       Log in
                     </button>
+                    </div>
                   </div>
                 </div>
               </div>
