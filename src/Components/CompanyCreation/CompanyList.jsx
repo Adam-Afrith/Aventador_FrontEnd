@@ -175,10 +175,10 @@ const CompanyCreation = () => {
         <img src={logo} className="" alt="logo" width="100px" />
         Company
       </h2>
-      <Fab color="primary" aria-label="add" onClick={Create}>
+      {/* <Fab color="primary" aria-label="add" onClick={Create}>
         <AddIcon />
-      </Fab>
-
+      </Fab> */}
+      <button className="btn btn-primary" onClick={Create}><i class="fa-solid fa-circle-plus"></i></button>
       <h3>Company List</h3>
       <div className="main-table">
         <div align = "right">
