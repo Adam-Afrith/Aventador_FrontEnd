@@ -30,7 +30,7 @@ function Header() {
         <div className="flex md:order-2">
           <img src={pic1} className='self-center w-8 h-8 rounded-full mx-1' alt="" />
             <div>
-              <strong>Starc</strong>
+              <strong>Adam</strong>
             </div>
       </div>
       </div>

@@ -171,17 +171,19 @@ const CompanyCreation = () => {
 
   return (
     <div>
-      <h2>
-        <img src={logo} className="" alt="logo" width="100px" />
-        Company
-      </h2>
-      {/* <Fab color="primary" aria-label="add" onClick={Create}>
-        <AddIcon />
-      </Fab> */}
-      <button className="btn btn-primary" onClick={Create}><i class="fa-solid fa-circle-plus"></i></button>
-      <h3>Company List</h3>
-      <div className="main-table">
-        <div align = "right">
+
+      <div className="card card-primary p-4 border-0 shadow-lg mb-3 mt-3">
+        <div className="d-flex justify-content-between">
+        <h3 className="text-xl d-flex items-center">Company</h3>
+        <img src={logo} className="" alt="logo" width="100px"/>
+        </div>
+        </div>
+      
+      
+      <div className="card card-primary p-4 border-0 shadow-lg">
+        <div className="d-flex justify-content-between">
+        <button className="btn btn-primary mb-4" onClick={Create}><i class="fa-solid fa-circle-plus"></i></button>
+   
           <input
             type="text"
             className="form-control form-control-sm mb-4"

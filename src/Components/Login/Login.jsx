@@ -70,7 +70,7 @@ const Login = () => {
     <>
       <div className="login-bg">
         <div
-          className="card card-primary p-12 border-0 shadow-lg"
+          className="card card-primary p-4 border-0 shadow-lg"
           style={{ backgroundColor: "transparent" }}
         >
           <div className="card-body">

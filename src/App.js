@@ -6,8 +6,8 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Routed from "./Router";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
-import Login from "./Components/Login/Login";
-import Sidebar from "./Components/Sidebar/Sidebar";
+
+
 import { createContext, useState } from "react";
 import ReactSwitch from 'react-switch';
 import { Container } from "react-bootstrap";
@@ -23,10 +23,10 @@ function App() {
 
 return (
     <>
-      
+
       {shouldRenderHeaderFooter && <Header />}
             <main className="card card-primary p-20 border-0 shadow-lg"> 
-         
+   
                         <Routed />
         
             </main>
